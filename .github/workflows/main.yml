@@ -1,0 +1,76 @@
+name: Flyway Migrations
+
+on:
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'flyway env'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - stage
+          - prod
+      dbHost:
+        type: string
+        description: 'Database host address'
+        required: true
+        default: 'localhost'
+      dbPort:
+        type: string
+        description: 'Database host port number'
+        required: true
+
+env:
+  FLYWAY_VERSION: 9.16.3
+  DB_NAME: postgres
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Flyway
+        run: |
+          wget -qO- https://download.red-gate.com/maven/release/org/flywaydb/enterprise/flyway-commandline/${{ env.FLYWAY_VERSION }}/flyway-commandline-${{ env.FLYWAY_VERSION }}-linux-x64.tar.gz | tar -xvz && sudo ln -s `pwd`/flyway-${{ env.FLYWAY_VERSION }}/flyway /usr/local/bin 
+
+      - name: Run Flyway Migrations
+        env:
+          FLYWAY_URL: jdbc:postgresql://${{ inputs.dbHost }}:${{ inputs.dbPort }}/${{ env.DB_NAME }}
+          FLYWAY_USER: postgres
+          FLYWAY_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          FLYWAY_SCHEMAS: flyway,public
+        run: |
+          flyway migrate
+
+      - name: Flyway info and write result to file
+        env:
+          FLYWAY_URL: jdbc:postgresql://${{ inputs.dbHost }}:${{ inputs.dbPort }}/${{ env.DB_NAME }}
+          FLYWAY_USER: postgres
+          FLYWAY_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          FLYWAY_SCHEMAS: flyway,public
+        run: |
+          flyway info > ./migration-status/$(date -u +"%Y-%m-%d|%H:%M:%S")-${{ inputs.env }}.txt
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: './migration-status/*-${{ inputs.env }}.txt'
