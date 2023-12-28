@@ -127,11 +127,11 @@ jobs:
             -e ${{ secrets.FLYWAY_LICENSE_KEY }} \
             "${{ env.DOCKER_IMAGE }}" \
             -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}" \
-            -Environment="${{ env.DB_PROD_URL }}" \
+            -url="${{ env.DB_PROD_URL }}" \
             -user="${{ env.DB_PROD_USERNAME }}" \
             -password="${{ env.DB_PROD_PASSWORD }}" \
             -baselineOnMigrate=true check -changes -drift -dryrun -schemas=public -outOfOrder=true \
-            -check.buildEnvironment="${{ secrets.DB_BUILD_URL }}" \
+            -check.buildUrl="${{ secrets.DB_BUILD_URL }}" \
             -check.buildUser="${{ secrets.DB_BUILD_USERNAME }}" \
             -check.buildPassword="${{ secrets.DB_BUILD_PASSWORD }}" \ 
             -reportFilename="/flyway/reports/report.html"
