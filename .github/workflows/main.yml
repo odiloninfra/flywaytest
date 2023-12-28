@@ -63,7 +63,7 @@ jobs:
             -user="${{ secrets.DB_PROD_USERNAME }}" \
             -password="${{ secrets.DB_PROD_PASSWORD }}" \
             -baselineOnMigrate=true check -changes -drift -dryrun -schemas="${{ env.SCHEMAS }}" -outOfOrder=true -connectRetries=10 \
-            -check.buildUrl="${{ secrets.DB_BUILD_URL }}" \
+            -check.buildEnvironment="${{ secrets.DB_BUILD_URL }}" \
             -check.buildUser="${{ secrets.DB_BUILD_USERNAME }}" \
             -check.buildPassword="${{ secrets.DB_BUILD_PASSWORD }}" \
             -reportFilename="/flyway/reports/report.html"
@@ -131,7 +131,7 @@ jobs:
             -user="${{ env.DB_PROD_USERNAME }}" \
             -password="${{ env.DB_PROD_PASSWORD }}" \
             -baselineOnMigrate=true check -changes -drift -dryrun -schemas=public -outOfOrder=true \
-            -check.buildUrl="${{ secrets.DB_BUILD_URL }}" \
+            -check.buildEnvironment="${{ secrets.DB_BUILD_URL }}" \
             -check.buildUser="${{ secrets.DB_BUILD_USERNAME }}" \
             -check.buildPassword="${{ secrets.DB_BUILD_PASSWORD }}" \ 
             -reportFilename="/flyway/reports/report.html"
