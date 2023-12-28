@@ -1,0 +1,21 @@
+databaseType = "PostgreSql"
+name = "flywaypipeline"
+id = "16c8500a-f094-4367-a1a7-8cf2a4e7e054"
+
+[flywayDesktop]
+developmentEnvironment = "development"
+shadowEnvironment = "shadow"
+schemaModel = "./schema-model"
+
+[redgateCompare]
+filterFile = "filter.rgf"
+
+[redgateCompare.postgres.options.ignores]
+ignoreNewlinesInTextObjects = "off"
+
+[flyway]
+mixed = true
+outOfOrder = true
+locations = ["filesystem:migrations"]
+validateMigrationNaming = true
+check = {majorTolerance = 0}

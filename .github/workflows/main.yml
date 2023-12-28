@@ -22,7 +22,7 @@ jobs:
       - name: Continuous Integration Flyway Clean Migrate
         run: >-
           docker run --rm
-          --volume ${{ github.workspace }}/migrations:/flyway/sql:ro
+          --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}"
           -url="${{ secrets.DB_BUILD_URL }}"
@@ -32,7 +32,7 @@ jobs:
       - name: Flyway Info
         run: >-
           docker run --rm
-          --volume ${{ github.workspace }}/migrations:/flyway/sql:ro
+          --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}"
           -url="${{ secrets.DB_BUILD_URL }}"
@@ -43,7 +43,7 @@ jobs:
       - name: Flyway Info Production
         run: >-
           docker run --rm
-          --volume ${{ github.workspace }}/migrations:/flyway/sql:ro
+          --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}"
           -url="${{ secrets.DB_PROD_URL }}"
@@ -54,7 +54,7 @@ jobs:
       - name: Flyway Check
         run: >-
           docker run --rm \
-            --volume ${{ github.workspace }}/migrations:/flyway/sql:ro \
+            --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro \
             --volume ${{ github.workspace }}/reports:/flyway/reports \
             -e ${{ secrets.FLYWAY_LICENSE_KEY }} \
             "${{ env.DOCKER_IMAGE }}" \
@@ -85,7 +85,7 @@ jobs:
    
       - run: >-    
           docker run --rm
-          --volume ${{ github.workspace }}/migrations:/flyway/sql:ro
+          --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}"
           -url="${{ secrets.DB_TEST_URL }}"
@@ -94,7 +94,7 @@ jobs:
           info -schemas="${{ env.SCHEMAS }}"
       - run: >-
           docker run --rm
-          --volume ${{ github.workspace }}/migrations:/flyway/sql:ro
+          --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}"
           -url="${{ secrets.DB_TEST_URL }}"
@@ -103,7 +103,7 @@ jobs:
           migrate -schemas="${{ env.SCHEMAS }}" -outOfOrder=true 
       - run: >-
           docker run --rm
-          --volume ${{ github.workspace }}/migrations:/flyway/sql:ro
+          --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}"
           -url="${{ secrets.DB_TEST_URL }}"
@@ -122,7 +122,7 @@ jobs:
       - name: Flyway Check
         run: >-
           docker run --rm \
-            --volume ${{ github.workspace }}/migrations:/flyway/sql:ro \
+            --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro \
             --volume ${{ github.workspace }}/reports:/flyway/reports \
             -e ${{ secrets.FLYWAY_LICENSE_KEY }} \
             "${{ env.DOCKER_IMAGE }}" \
@@ -144,7 +144,7 @@ jobs:
           
       - run: >-           
           docker run --rm
-          --volume ${{ github.workspace }}/migrations:/flyway/sql:ro
+          --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}" 
           -url="${{ secrets.DB_PROD_URL }}"
@@ -153,7 +153,7 @@ jobs:
           info -schemas="${{ env.SCHEMAS }}"
       - run: >-
           docker run --rm
-          --volume ${{ github.workspace }}/migrations:/flyway/sql:ro
+          --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}" 
           -url="${{ secrets.DB_PROD_URL }}"
@@ -162,10 +162,11 @@ jobs:
           migrate -schemas="${{ env.SCHEMAS }}" -outOfOrder=true
       - run: >-
           docker run --rm
-          --volume ${{ github.workspace }}/migrations:/flyway/sql:ro
+          --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}" 
           -url="${{ secrets.DB_PROD_URL }}"
           -user="${{ secrets.DB_PROD_USERNAME }}"
           -password="${{ secrets.DB_PROD_PASSWORD }}"
           info -schemas="${{ env.SCHEMAS }}"
+          
