@@ -25,7 +25,7 @@ jobs:
           --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}"
-          -url="${{ secrets.DB_BUILD_URL }}"
+          -Environment="${{ secrets.DB_BUILD_URL }}"
           -user="${{ secrets.DB_BUILD_USERNAME }}"
           -password="${{ secrets.DB_BUILD_PASSWORD }}"
           -cleanDisabled=false clean migrate -schemas="${{ env.SCHEMAS }}"
@@ -35,7 +35,7 @@ jobs:
           --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}"
-          -url="${{ secrets.DB_BUILD_URL }}"
+          -Environment="${{ secrets.DB_BUILD_URL }}"
           -user="${{ secrets.DB_BUILD_USERNAME }}"
           -password="${{ secrets.DB_BUILD_PASSWORD }}" 
           info -schemas="${{ env.SCHEMAS }}"
@@ -46,7 +46,7 @@ jobs:
           --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}"
-          -url="${{ secrets.DB_PROD_URL }}"
+          -Environment="${{ secrets.DB_PROD_URL }}"
           -user="${{ secrets.DB_PROD_USERNAME }}" 
           -password="${{ secrets.DB_PROD_PASSWORD }}"
           info -schemas="${{ env.SCHEMAS }}"
@@ -59,7 +59,7 @@ jobs:
             -e ${{ secrets.FLYWAY_LICENSE_KEY }} \
             "${{ env.DOCKER_IMAGE }}" \
             -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}" \
-            -url="${{ secrets.DB_PROD_URL }}" \
+            -Environment="${{ secrets.DB_PROD_URL }}" \
             -user="${{ secrets.DB_PROD_USERNAME }}" \
             -password="${{ secrets.DB_PROD_PASSWORD }}" \
             -baselineOnMigrate=true check -changes -drift -dryrun -schemas="${{ env.SCHEMAS }}" -outOfOrder=true -connectRetries=10 \
@@ -88,7 +88,7 @@ jobs:
           --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}"
-          -url="${{ secrets.DB_TEST_URL }}"
+          -Environment="${{ secrets.DB_TEST_URL }}"
           -user="${{ secrets.DB_TEST_USERNAME }}"
           -password="${{ secrets.DB_TEST_PASSWORD }}"  
           info -schemas="${{ env.SCHEMAS }}"
@@ -97,7 +97,7 @@ jobs:
           --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}"
-          -url="${{ secrets.DB_TEST_URL }}"
+          -Environment="${{ secrets.DB_TEST_URL }}"
           -user="${{ secrets.DB_TEST_USERNAME }}"
           -password="${{ secrets.DB_TEST_PASSWORD }}"   
           migrate -schemas="${{ env.SCHEMAS }}" -outOfOrder=true 
@@ -106,7 +106,7 @@ jobs:
           --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}"
-          -url="${{ secrets.DB_TEST_URL }}"
+          -Environment="${{ secrets.DB_TEST_URL }}"
           -user="${{ secrets.DB_TEST_USERNAME }}"
           -password="${{ secrets.DB_TEST_PASSWORD }}"   
           info -schemas="${{ env.SCHEMAS }}"
@@ -127,7 +127,7 @@ jobs:
             -e ${{ secrets.FLYWAY_LICENSE_KEY }} \
             "${{ env.DOCKER_IMAGE }}" \
             -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}" \
-            -url="${{ env.DB_PROD_URL }}" \
+            -Environment="${{ env.DB_PROD_URL }}" \
             -user="${{ env.DB_PROD_USERNAME }}" \
             -password="${{ env.DB_PROD_PASSWORD }}" \
             -baselineOnMigrate=true check -changes -drift -dryrun -schemas=public -outOfOrder=true \
@@ -147,7 +147,7 @@ jobs:
           --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}" 
-          -url="${{ secrets.DB_PROD_URL }}"
+          -Environment="${{ secrets.DB_PROD_URL }}"
           -user="${{ secrets.DB_PROD_USERNAME }}"
           -password="${{ secrets.DB_PROD_PASSWORD }}" 
           info -schemas="${{ env.SCHEMAS }}"
@@ -156,7 +156,7 @@ jobs:
           --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}" 
-          -url="${{ secrets.DB_PROD_URL }}"
+          -Environment="${{ secrets.DB_PROD_URL }}"
           -user="${{ secrets.DB_PROD_USERNAME }}"
           -password="${{ secrets.DB_PROD_PASSWORD }}" 
           migrate -schemas="${{ env.SCHEMAS }}" -outOfOrder=true
@@ -165,7 +165,7 @@ jobs:
           --volume ${{ github.workspace }}/flywaypipeline/migrations:/flyway/sql:ro
           "${{ env.DOCKER_IMAGE }}"
           -licenseKey="${{ secrets.FLYWAY_LICENSE_KEY }}" 
-          -url="${{ secrets.DB_PROD_URL }}"
+          -Environment="${{ secrets.DB_PROD_URL }}"
           -user="${{ secrets.DB_PROD_USERNAME }}"
           -password="${{ secrets.DB_PROD_PASSWORD }}"
           info -schemas="${{ env.SCHEMAS }}"
